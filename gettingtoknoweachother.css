@@ -1,0 +1,18 @@
+h1 {
+    text-align: center;
+    background-color: mediumaquamarine; 
+}
+
+body {
+    background-color: pink;
+}
+
+h2 {
+    background-color: palevioletred;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
