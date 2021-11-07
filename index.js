@@ -1,18 +1,46 @@
-const http = require('http');
-const fs = require('fs');
+//server.js
+//let http = require('http')
+//let socketIO = require('socket.io')
+
+const express = require('express')
+const expressHandlebars = require('express-handlebars')
+const app = express()  
+
+app.use(express.static('public'))
+
+app.engine('handlebars', expressHandlebars({
+  defaultLayout: 'main',
+}))
+
+app.set('view engine', 'handlebars')
+app.set("views", './views')
+
 const port = process.env.PORT || 3000;
 
-const server = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'text/html' })
-    fs.readFile('index.html', function(err,data){
-        if(err){
-                res.writeHead(404);
-                return res.end('File not found')
-            }
-            res.writeHead(responseCode, { 'Content-Type': contentType })
-            res.end(data)
-        })
-    })
+//let server = http.Server(app) 
+//let io = socketIO(server) 
 
-    server.listen(port, () => console.log(`server started on port ${port}; ` +
-    'press Ctrl-C to terminate....'))
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/homepage.html')
+})
+
+app.get('/credits', (req, res) => {
+  res.sendFile(__dirname + '/views/credits.html')
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/views/login.html')
+})
+
+/*  
+io.on('connection', (socket) => {
+  console.log('User is connected sucessfully')
+  
+  socket.on('disconnect', () => {
+    console.log('Sorry! User is unfortunately disconnected')
+  })
+})
+*/
+app.listen(port, () => console.log(
+  'Started on http://localhost:${port}; ' +
+  'press Ctrl-C to terminate.'))
